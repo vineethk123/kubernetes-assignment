@@ -1,0 +1,26 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: msgs-deployment
+spec:
+  template:
+    metadata:
+      labels:
+        app: my-msgs
+    spec:
+      volumes:
+      - name: msgs-pv
+        persistentVolumeClaim:
+          claimName: msgs-pv-claim
+      containers:
+      - name: my-reader
+        image: vineethk123/foo
+        volumeMounts:
+        - mountPath: "/app/messages"
+          name: msgs-pv
+
+      - name: my-display
+        image: vineethk123/foo1
+        volumeMounts:
+        - mountPath: "/app/messages"
+          name: msgs-pv
